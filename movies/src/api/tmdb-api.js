@@ -94,3 +94,18 @@ export const getMovie = (args) => {
        throw error;
     });
   };
+
+  export const getLatestMovie = () => {
+    return fetch(
+      `https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
+    )
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return res.json();
+    })
+    .then(movie => {
+      return movie;
+    })
+  };

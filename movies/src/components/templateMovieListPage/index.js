@@ -3,6 +3,8 @@ import Header from "../headerMovieList";
 import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
+import LatestMovieContainer from "../latestMovieContainer/index";
+
 
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
@@ -34,6 +36,8 @@ function MovieListPageTemplate({ movies, title, action }) {
             titleFilter={nameFilter}
             genreFilter={genreFilter}
           />
+          <h2>Latest Movie:</h2>
+          <LatestMovieContainer></LatestMovieContainer>
         </Grid>
         <MovieList action={action} movies={displayedMovies}></MovieList>
       </Grid>
