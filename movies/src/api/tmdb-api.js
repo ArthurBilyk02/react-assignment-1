@@ -145,3 +145,29 @@ export const getMovie = (args) => {
        throw error;
     });
   };
+
+
+export const getActor = async (id) => {
+  const fetch = require('node-fetch');
+
+  const url = `https://api.themoviedb.org/3/person/${id}?language=en-US`; // Make sure to use the `id` parameter
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YzIxZGM5Yjg3MzRlNGZiYzdjMmRiNDFhNWFiNmIyNyIsInN1YiI6IjY1NGE5MjJlNDFhNTYxMzM2ODg1NzJjZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.YZdHjr6h8FtGfAQ2dHBkHV-Kq91BTYjm97iO2TT7Z9k`
+    }
+  };
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const json = await response.json();
+    return json; // Return the JSON data
+  } catch (err) {
+    console.error('error:' + err);
+    throw err; // Throw the error so it can be caught and handled by the caller
+  }
+};

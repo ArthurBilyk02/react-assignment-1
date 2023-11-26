@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Navigate, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
@@ -12,6 +12,8 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage"
 import TrendingMoviesPage from "./pages/trendingMoviesPage";
+import ActorsPage from "./components/actors/actorsPage";
+import LatestMovie from "./pages/latest";
 
 
 const queryClient = new QueryClient({
@@ -36,10 +38,11 @@ const App = () => {
           {/* <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} /> */}
           <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
           <Route path="/movies/:id" element={<MoviePage />} />
+          <Route path="/actors/:id" element={<ActorsPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="*" element={ <Navigate to="/" /> } />
           <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
           <Route path="/movies/trending" element={<TrendingMoviesPage />} />
+          <Route path="/movies/latest" element={<LatestMovie />} />
           </Routes>
         </MoviesContextProvider>
       </BrowserRouter>

@@ -3,12 +3,12 @@ import Header from "../headerMovieList";
 import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
-import LatestMovieContainer from "../latestMovieContainer/index";
 
 
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
+  const [ratingFilter, setRatingFilter] = useState("");
   const genreId = Number(genreFilter);
 
   let displayedMovies = movies
@@ -17,11 +17,15 @@ function MovieListPageTemplate({ movies, title, action }) {
     })
     .filter((m) => {
       return genreId > 0 ? m.genre_ids.includes(genreId) : true;
+    })
+    .filter((m) => {
+      return ratingFilter ? m.vote_average <= Number(ratingFilter) : true;
     });
 
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
-    else setGenreFilter(value);
+    else if(type === "genre") setGenreFilter(value);
+    else setRatingFilter(value);
   };
 
   return (
@@ -35,9 +39,8 @@ function MovieListPageTemplate({ movies, title, action }) {
             onUserInput={handleChange}
             titleFilter={nameFilter}
             genreFilter={genreFilter}
+            ratingFilter={ratingFilter}
           />
-          <h2>Latest Movie:</h2>
-          <LatestMovieContainer></LatestMovieContainer>
         </Grid>
         <MovieList action={action} movies={displayedMovies}></MovieList>
       </Grid>

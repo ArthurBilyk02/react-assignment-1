@@ -7,8 +7,10 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const MovieActors = ({ movieId }) => {
+  const navigate = useNavigate(); // useNavigate hook
   const { data: actors, isLoading, isError, error } = useQuery(
     ['actors', movieId],
     () => getMovieActors(movieId)
@@ -22,13 +24,17 @@ const MovieActors = ({ movieId }) => {
     return <div>Error: {error.message}</div>;
   }
 
+  const handleCardClick = (actorId) => {
+    navigate(`/actors/${actorId}`);
+  };
+
   return (
     <div>
       <h2>Actors</h2>
       <Grid container spacing={3}>
         {actors && actors.slice(0, 8).map((actor) => (
           <Grid item xs={12} sm={6} md={3} key={actor.id}>
-            <Card>
+            <Card onClick={() => handleCardClick(actor.id)} style={{ cursor: 'pointer' }}>
               <CardMedia
                 component="img"
                 height="250"

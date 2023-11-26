@@ -13,6 +13,7 @@ import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
+import StarRate from "@mui/icons-material/StarRate";
 
 
 const formControl = 
@@ -23,9 +24,9 @@ const formControl =
   };
 
 export default function FilterMoviesCard(props) {
-
+  console.log(props);
   const { data, error, isLoading, isError } = useQuery("genres", getGenres);
-
+  const ratings = [2,4,6,8,10];
   if (isLoading) {
     return <Spinner />;
   }
@@ -37,10 +38,10 @@ export default function FilterMoviesCard(props) {
   if (genres[0].name !== "All"){
     genres.unshift({ id: "0", name: "All" });
   }
-
+  
   const handleChange = (e, type, value) => {
     e.preventDefault();
-    props.onUserInput(type, value); // NEW
+    props.onUserInput(type, value);
   };
 
   const handleTextChange = (e, props) => {
@@ -49,6 +50,10 @@ export default function FilterMoviesCard(props) {
 
   const handleGenreChange = (e) => {
     handleChange(e, "genre", e.target.value);
+  };
+
+  const handleRatingChange = (e) => {
+    handleChange(e, "rating", e.target.value);
   };
 
   return (
@@ -90,6 +95,26 @@ export default function FilterMoviesCard(props) {
             })}
           </Select>
         </FormControl>
+
+        <FormControl sx={{ width: '100%', marginY: 1, ...props.formControl}}> {/* Ensure formControl style is passed correctly */}
+      <InputLabel id="rating-label">Rating</InputLabel>
+      <Select
+        labelId="rating-label"
+        id="rating-select"
+        value={props.ratingFilter}
+        label="Rating"
+        onChange={handleRatingChange}
+      >
+        {ratings.map((rating) => {
+          return (
+            <MenuItem key={rating} value={rating}>
+              <StarRate fontSize="small" /> {rating}
+            </MenuItem>
+          );
+        })}
+      </Select>
+    </FormControl>
+
       </CardContent>
       <CardMedia
         sx={{ height: 300 }}
