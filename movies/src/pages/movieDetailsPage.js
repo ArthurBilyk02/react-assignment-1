@@ -5,6 +5,7 @@ import PageTemplate from "../components/templateMoviePage";
 import { getMovie } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
+import MovieActors from "../components/actors";
 //import useMovie from "../hooks/useMovie"; Redundant
 
 const MoviePage = (props) => {
@@ -28,6 +29,7 @@ const MoviePage = (props) => {
         <>
           <PageTemplate movie={movie}>
             <MovieDetails movie={movie} />
+            <MovieActors movieId={id} />
           </PageTemplate>
         </>
       ) : (

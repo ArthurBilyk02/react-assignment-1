@@ -109,3 +109,25 @@ export const getMovie = (args) => {
       return movie;
     })
   };
+
+  export const getMovieActors = (id) => {
+    const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500'; 
+    return fetch(
+        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    )
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch movie actors');
+        }
+        return response.json();
+    })
+    .then(data => {
+        return data.cast.map(actor => ({
+            ...actor,
+            profile_path: actor.profile_path ? `${IMAGE_BASE_URL}${actor.profile_path}` : null
+        }));
+    })
+    .catch(error => {
+        throw error;
+    });
+  };
